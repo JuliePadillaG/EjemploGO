@@ -1,0 +1,555 @@
+definitions:
+  domain.Carry:
+    properties:
+      address:
+        type: string
+      cid:
+        type: string
+      company_name:
+        type: string
+      id:
+        type: integer
+      locality_id:
+        type: integer
+      telephone:
+        type: string
+    type: object
+  domain.Locality:
+    properties:
+      country_name:
+        type: string
+      id:
+        type: integer
+      locality_name:
+        type: string
+      province_name:
+        type: string
+    type: object
+
+  domain.Product_batches:
+    properties:
+      current_quantity:
+        type: integer
+      current_temperature:
+        type: integer
+      due_date:
+        type: string
+      id:
+        type: integer
+      initial_quantity:
+        type: integer
+      manufacturing_date:
+        type: string
+      manufacturing_hour:
+        type: integer
+      minimum_temperature:
+        type: integer
+      product_id:
+        type: integer
+      section_id:
+        type: integer
+      section_number:
+        type: integer
+    type: object
+  domain.Section:
+    properties:
+      current_capacity:
+        type: integer
+      current_temperature:
+        type: integer
+      id:
+        type: integer
+      maximum_capacity:
+        type: integer
+      minimum_capacity:
+        type: integer
+      minimum_temperature:
+        type: integer
+      product_type_id:
+        type: integer
+      section_number:
+        type: integer
+      warehouse_id:
+        type: integer
+
+  domain.Product:
+    properties:
+      description:
+        type: string
+      expiration_rate:
+        type: integer
+      freezing_rate:
+        type: integer
+      height:
+        type: number
+      id:
+        type: integer
+      length:
+        type: number
+      netweight:
+        type: number
+      product_code:
+        type: string
+      product_type_id:
+        type: integer
+      recommended_freezing_temperature:
+        type: number
+      seller_id:
+        type: integer
+      width:
+        type: number
+    type: object
+  domain.ProductRecords:
+    properties:
+      id:
+        type: integer
+      last_update_date:
+        type: string
+      products_id:
+        type: integer
+      purchase_price:
+        type: number
+      sale_price:
+        type: number
+
+    type: object
+  domain.Warehouse:
+    properties:
+      address:
+        type: string
+      id:
+        type: integer
+      minimum_capacity:
+        type: integer
+      minimum_temperature:
+        type: integer
+      telephone:
+        type: string
+      warehouse_code:
+        type: string
+    type: object
+  web.response:
+    properties:
+      data: {}
+    type: object
+info:
+  contact:
+    name: API Support
+    url: https://developers.mercadolibre.com.ar/support
+  description: This API Handle MELI Products.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://developers.mercadolibre.com.ar/es_ar/terminos-y-condiciones
+  title: MELI Bootcamp API
+  version: "1.0"
+paths:
+  /api/v1/carries:
+    post:
+      consumes:
+      - application/json
+      description: create a carry
+      parameters:
+      - description: Carry
+        in: body
+        name: carry
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Carry'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: Create a carry
+      tags:
+      - Carries
+  /api/v1/localities:
+    post:
+      consumes:
+      - application/json
+      description: create locality
+      parameters:
+      - description: Locality
+        in: body
+        name: locality
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Locality'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: Create locality
+      tags:
+      - Localities
+  /api/v1/localities/reportCarries:
+    get:
+      consumes:
+      - application/json
+      description: get locality report
+      parameters:
+      - description: Locality id
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: Get locality report
+      tags:
+      - Localities
+
+  /api/v1/productbatches:
+    post:
+      consumes:
+      - application/json
+      description: create product_batches
+      parameters:
+      - description: product_batches
+        in: body
+        name: product_batches
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Product_batches'
+
+  /api/v1/productRecords:
+    post:
+      consumes:
+      - application/json
+      description: create a product record
+      parameters:
+      - description: ProductRecords
+        in: body
+        name: carry
+        required: true
+        schema:
+          $ref: '#/definitions/domain.ProductRecords'
+
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/web.response'
+
+      summary: Create product batches
+      tags:
+      - Product_batches
+  /api/v1/reportProducts/:
+    get:
+      consumes:
+      - application/json
+      description: get report product
+      parameters:
+      - description: BatchNumber ID to get report (optional)
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: Get ReportProduct
+      tags:
+      - ReportProduct
+  /api/v1/sections:
+    get:
+      consumes:
+      - application/json
+      description: get all sections
+
+      summary: Create a product record
+      tags:
+      - Product Records
+  /api/v1/products:
+    get:
+      consumes:
+      - application/json
+      description: get products
+
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.response'
+
+      summary: Get all sections
+      tags:
+      - Sections
+    post:
+      consumes:
+      - application/json
+      description: create section
+      parameters:
+      - description: Section
+        in: body
+        name: section
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Section'
+
+      summary: List products
+      tags:
+      - Products
+    post:
+      consumes:
+      - application/json
+      description: create a product
+      parameters:
+      - description: Product
+        in: body
+        name: carry
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Product'
+
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/web.response'
+
+      summary: Create section
+      tags:
+      - Sections
+  /api/v1/sections/:id:
+    delete:
+      consumes:
+      - application/json
+      description: delete section
+      parameters:
+      - description: Section ID
+
+      summary: Create a product
+      tags:
+      - Products
+  /api/v1/products/:id:
+    delete:
+      consumes:
+      - application/json
+      description: delete product
+      parameters:
+      - description: Product ID
+
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+
+      summary: Delete section
+      tags:
+      - Sections
+    get:
+      consumes:
+      - application/json
+      description: get one section
+      parameters:
+      - description: Section ID
+
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: Delete product
+      tags:
+      - Products
+    get:
+      consumes:
+      - application/json
+      description: get product by ID
+      parameters:
+      - description: Product ID
+
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.response'
+
+      summary: Get section
+      tags:
+      - Sections
+    patch:
+      consumes:
+      - application/json
+      description: update section
+      parameters:
+      - description: Section ID
+
+      summary: List one product
+      tags:
+      - Products
+    patch:
+      consumes:
+      - application/json
+      description: update product
+      parameters:
+      - description: Product ID
+
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.response'
+
+      summary: Update section
+      tags:
+      - Sections
+
+      summary: Update product
+      tags:
+      - Products
+  /api/v1/products/reportRecords:
+    get:
+      consumes:
+      - application/json
+      description: get report records
+      parameters:
+      - description: Product id
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: Get report records
+      tags:
+      - Products
+
+  /api/v1/warehouses:
+    get:
+      consumes:
+      - application/json
+      description: get warehouses
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: List warehouses
+      tags:
+      - Warehouses
+    post:
+      consumes:
+      - application/json
+      description: create warehouse
+      parameters:
+      - description: Warehouse
+        in: body
+        name: warehouse
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Warehouse'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: Create warehouse
+      tags:
+      - Warehouses
+  /api/v1/warehouses/:id:
+    delete:
+      consumes:
+      - application/json
+      description: delete warehouse
+      parameters:
+      - description: Warehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: Delete warehouse
+      tags:
+      - Warehouses
+    get:
+      consumes:
+      - application/json
+      description: get product by ID
+      parameters:
+      - description: Warehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: List one warehouse
+      tags:
+      - Warehouses
+    patch:
+      consumes:
+      - application/json
+      description: update warehouse
+      parameters:
+      - description: Warehouse ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/web.response'
+      summary: Update warehouse
+      tags:
+      - Warehouses
+swagger: "2.0"
